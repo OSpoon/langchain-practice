@@ -6,10 +6,10 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "prepare": "simple-git-hooks",
     "start": "esno src/simple.ts",
     "test": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@langchain/core": "^0.3.17",
