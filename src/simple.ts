@@ -1,24 +1,29 @@
-import { HumanMessage, SystemMessage } from '@langchain/core/messages'
 import { StringOutputParser } from '@langchain/core/output_parsers'
+import { ChatPromptTemplate } from '@langchain/core/prompts'
 import { ChatOpenAI } from '@langchain/openai'
 import 'dotenv/config'
 
+// LLM
 const llm = new ChatOpenAI({
   configuration: {
     baseURL: 'https://api.chatanywhere.tech',
   },
 })
 
-const messages = [
-  new SystemMessage('Translate the following from English into Chinese'),
-  new HumanMessage('hi!'),
-]
+// Prompt Template
+const prompt = ChatPromptTemplate.fromMessages([
+  ['system', 'Translate the following into {language}:'],
+  ['user', '{text}'],
+])
 
+// Output Parser
 const parser = new StringOutputParser();
 
 (async () => {
-  const result = await llm
+  // LangChain Expression Language (LCEL)
+  const result = await prompt
+    .pipe(llm)
     .pipe(parser)
-    .invoke(messages)
+    .invoke({ language: 'Chinese', text: 'hi' })
   console.log(result)
 })()
