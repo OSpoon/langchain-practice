@@ -18,18 +18,18 @@ export class ChatBot {
         {
           type: 'input',
           name: 'message',
-          message: chalk.blue('Q：'),
+          message: chalk.blue('Question：'),
         },
       ])
 
       const input = answers.message.trim()
       const response = await this.chatAgent.respond(input)
-      console.log(chalk.green(`A：${response}`))
+      console.log(chalk.green(`Answer：${response}`))
       this.askQuestion()
     }
     catch (error: unknown) {
       if ((error as any).message.includes('User force closed the prompt')) {
-        console.log('\nBye！')
+        console.log(chalk.yellow('\nBye！'))
         process.exit(0)
       }
       else {
