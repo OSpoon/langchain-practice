@@ -1,6 +1,7 @@
 import { StringOutputParser } from '@langchain/core/output_parsers'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
 import { ChatOpenAI } from '@langchain/openai'
+import { ChatBot } from './chat.js'
 import 'dotenv/config'
 
 // LLM
@@ -17,13 +18,14 @@ const prompt = ChatPromptTemplate.fromMessages([
 ])
 
 // Output Parser
-const parser = new StringOutputParser();
+const parser = new StringOutputParser()
 
-(async () => {
-  // LangChain Expression Language (LCEL)
-  const result = await prompt
-    .pipe(llm)
-    .pipe(parser)
-    .invoke({ language: 'Chinese', text: 'hi' })
-  console.log(result)
-})()
+new ChatBot({
+  async respond(input) {
+    const result = await prompt
+      .pipe(llm)
+      .pipe(parser)
+      .invoke({ language: 'Chinese', text: input })
+    return result
+  },
+}).run()
