@@ -7,7 +7,7 @@ import 'dotenv/config'
 // LLM
 const llm = new Ollama({
   baseUrl: 'http://localhost:11434',
-  model: 'llama3',
+  model: 'qwen:4b',
 })
 
 // Prompt Template
